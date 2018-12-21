@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Table</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <head>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
+  <script>
+    $( document ).ready(function() {
+       $("#addUser").click(function (){
+          var name = $("#name").val();
+          var address = $("#address").val();
+          var phoneNumber = $("#phoneNumber").val();
+          var sample = $("#sample").clone();
+          sample.find(".name").text(name);
+          sample.find(".address").text(address);
+          sample.find(".phone").text(phoneNumber);
+          var userListTag = $("#users");
+          var count = userListTag.find('tr').length;
+          var nextNumber = count + 1;
+          sample.find("tr").attr("id", nextNumber);
+          sample.find("button").attr("onclick","deleteUser("+ nextNumber +")");
+          $(sample.find("tbody").html()).appendTo($("#users"));
+
+          //clear inputs
+          $("#name").val("");
+          $("#address").val("");
+          $("#phoneNumber").val("");
+       });
+    });
+
+    function deleteUser(id){
+      $("tbody #" + id).remove();
+    }
+  </script>
+</head>
+<body>
+  <h2>User Table</h2>
+
+  <form>
+    <fieldset>
+      <legend>Personal information:</legend>
+      Name:<br>
+      <input id="name" type="text" name="name">
+      <br>
+      Phone Number:<br>
+      <input type="number" id="phoneNumber" name="phoneNumber"></input>
+      <br>
+      Address name:<br>
+      <textarea id="address" name="address"></textarea>
+      <br><br>
+      <button type="button" id="addUser">Add</button>
+    </fieldset>
+  </form>
+
+  <table>
+    <thead>
+      <tr id="captions">
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="users">
+    </tbody>
+  </table>
+  <div style="display: none;">
+    <table id="sample">
+      <tr id="">
+        <td class="name"></td>
+        <td class="phone"></td>
+        <td class="address"></td>
+        <td>
+          <button type="button" >Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>
